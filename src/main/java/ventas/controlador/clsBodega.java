@@ -4,20 +4,12 @@
  * and open the template in the editor.
  */
 package ventas.controlador;
-
-
-
-
-/**
- *
- * @author carlos
- */
-
 /*
     private int perid;
     private String pernombre;
     private String perestatus; 
 */
+
 public class clsBodega {
     int bodcodigo;
     String bodnombre;
