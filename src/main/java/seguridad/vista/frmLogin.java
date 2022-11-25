@@ -16,10 +16,10 @@ import prototipos.vista.mdiPrototipo;
 import logistica.vista.mdiLogistica;
 import compras.vista.mdiCompras;
 import ventas.vista.mdiVentas;
+import seguridad.vista.mdiGeneral;
 import seguridad.controlador.clsSeguridad;
 import seguridad.controlador.clsUsuarioConectado;
 import seguridad.modelo.daoAcceso;
-import seguridad.modelo.daoBitacora;
 import seguridad.modelo.daoUsuario;
 
 
@@ -169,10 +169,8 @@ public class frmLogin extends javax.swing.JFrame {
                 // Recuperación de información a través de otro objeto
                 usuarioAConsultar = usuarioDAO.queryn(usuarioAConsultar);
                 clsSeguridad c = new clsSeguridad();
-                Boolean estadoUsuarioRegistrado=false;
-                estadoUsuarioRegistrado = usuarioDAO.obtenerEstadoUsuario(txtUsuario.getText(), c.encode(txtContraseña.getText()));
+               
                 // JOptionPane.showMessageDialog(null, "Estado Usuario: " + estadoUsuarioRegistrado);
-                if (estadoUsuarioRegistrado) {
                 //if (c.encode(txtContraseña.getText()).equals(usuarioAConsultar.getUsucontrasena()) && txtUsuario.getText().equals(usuarioAConsultar.getUsunombre())) {
                 
                     JOptionPane.showMessageDialog(null, "Bienvenido al SISTEMA\n", "Mensaje de bienvenida", JOptionPane.INFORMATION_MESSAGE);
@@ -192,7 +190,8 @@ public class frmLogin extends javax.swing.JFrame {
 
                         case "Area Seguridad":
                         try {
-                            daoAcceso acceso = new daoAcceso(usuarioAConsultar.getUsutipo());
+                            mdiGeneral menuSeguridad = new mdiGeneral();
+                            menuSeguridad.setVisible(true);
                             this.dispose();
                         } catch (Exception e) {
                             System.out.println(e);
@@ -213,20 +212,13 @@ public class frmLogin extends javax.swing.JFrame {
                     }
                     //---fin agregado
 
-                } else {
-                    JOptionPane.showMessageDialog(this, "ERROR AL ENCONTRAR USUARIO o CONTRASEÑA", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    txtContraseña.setText("");
-                    txtUsuario.setText("");
-                }
             } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(this, "ERROR AL ENCONTRAR USUARIO o CONTRASEÑA", "ERROR", JOptionPane.ERROR_MESSAGE);
                 txtContraseña.setText("");
                 txtUsuario.setText("");
             }
         }
-          daoBitacora bitacora = new daoBitacora();
-        bitacora.insert(clsUsuarioConectado.getUsuid(), codigoAplicacion, "Login");
-      
+       
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 

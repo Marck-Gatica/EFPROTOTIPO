@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
 import seguridad.controlador.clsSeguridad;
 import seguridad.controlador.clsUsuarioConectado;
 import seguridad.modelo.clsConexion;
-import seguridad.modelo.daoBitacora;
+
 
 
 
@@ -178,8 +178,7 @@ public class frmCambioContrasena extends javax.swing.JInternalFrame {
             try{
                 AConsultar.setUsucontrasena(c.encode(txtconfi_contrasena.getText()));
                 usuarioDAO.update(AConsultar);
-                daoBitacora bitacora = new  daoBitacora();
-                bitacora.insert(clsUsuarioConectado.getUsuid(), codigoAplicacion, "Update");                
+                           
                 JOptionPane.showMessageDialog(null, "Contraseña modificada");
                 
             }catch(Exception ex){

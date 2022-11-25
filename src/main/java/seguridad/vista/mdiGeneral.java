@@ -8,7 +8,7 @@ package seguridad.vista;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import seguridad.controlador.clsUsuarioConectado;
-import seguridad.modelo.daoBitacora;
+
 
 /**
  *
@@ -225,23 +225,11 @@ public class mdiGeneral extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
-        frmMantenimientoModulos ventana5 = new frmMantenimientoModulos();
-        jDesktopPane1.add(ventana5);
-        Dimension desktopSize = jDesktopPane1.getSize();
-        Dimension FrameSize = ventana5.getSize();
-        ventana5.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);            
+                 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void mCierreSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mCierreSesionActionPerformed
-        int respuesta_cs = JOptionPane.showConfirmDialog(this, "¿Desea Cerrar Sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
 
-        if (respuesta_cs == 0) {
-            this.dispose();
-              daoBitacora bitacora = new daoBitacora();
-            bitacora.insert(clsUsuarioConectado.getUsuid(), codigoAplicacion, "logoff");
-        }
-      
-        
     }//GEN-LAST:event_mCierreSesionActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
@@ -256,11 +244,7 @@ public class mdiGeneral extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
-        frmMantenimientoBitacora ventana6 = new frmMantenimientoBitacora();
-        jDesktopPane1.add(ventana6);
-        Dimension desktopSize = jDesktopPane1.getSize();
-        Dimension FrameSize = ventana6.getSize();
-        ventana6.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+       
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed

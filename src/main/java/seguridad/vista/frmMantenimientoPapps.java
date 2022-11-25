@@ -9,7 +9,7 @@ package seguridad.vista;
 import java.util.ArrayList;
 import seguridad.modelo.daoPerfilApps;
 import seguridad.modelo.daoAplicacion;
-import seguridad.modelo.daoBitacora;
+
 import seguridad.controlador.clsPerfilAplicaciones;
 import seguridad.controlador.clsAplicacion;
 import java.util.List;
@@ -299,15 +299,7 @@ public class frmMantenimientoPapps extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-        daoBitacora Bitacora= new daoBitacora();
-        frmDerecho venatana = new frmDerecho();
-        
-        venatana.txtusuario.setText(Jnombre.getText());
-        venatana.txtfecha.setText(Bitacora.fechaActual());
-        venatana.txtapli.setText(title);
-        venatana.show();
-        
+        // TODO add your handling code here  
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
