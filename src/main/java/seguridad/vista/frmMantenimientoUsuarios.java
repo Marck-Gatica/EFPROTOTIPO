@@ -12,7 +12,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
 import seguridad.controlador.clsUsuarioConectado;
-import seguridad.modelo.daoBitacora;
+
 
 
 /**
@@ -41,11 +41,10 @@ int codigoAplicacion=1;
         modelo.addColumn("Correo");
         modelo.addColumn("telefono");
         modelo.addColumn("direccion");
-        modelo.addColumn("Tipo");
         daoUsuario usuarioDAO = new daoUsuario();
         List<clsUsuario> usuarios = usuarioDAO.select();
         tablaVendedores.setModel(modelo);
-        String[] dato = new String[9];
+        String[] dato = new String[8];
         for (int i = 0; i < usuarios.size(); i++) {
             dato[0] = Integer.toString(usuarios.get(i).getUsuid());
             dato[1] = usuarios.get(i).getUsunombre();
@@ -55,7 +54,6 @@ int codigoAplicacion=1;
             dato[5] = usuarios.get(i).getUsucorreoe();
             dato[6] = usuarios.get(i).getUsutelefono();
             dato[7] = usuarios.get(i).getUsudireccion();
-            dato[8] = usuarios.get(i).getUsutipo();
             //System.out.println("vendedor:" + vendedores);
             modelo.addRow(dato);
         }
@@ -73,9 +71,7 @@ int codigoAplicacion=1;
         txtCorreoE.setText(usuarioAConsultar.getUsucorreoe());
         txtTelefono.setText(usuarioAConsultar.getUsutelefono());
         txtDireccion.setText(usuarioAConsultar.getUsudireccion());
-        txtTipo.setText(usuarioAConsultar.getUsutipo());
-        daoBitacora bitacora = new  daoBitacora();
-        bitacora.insert(clsUsuarioConectado.getUsuid(), codigoAplicacion, "Select");
+
     }
 
     public frmMantenimientoUsuarios() {
@@ -408,8 +404,7 @@ int codigoAplicacion=1;
         clsUsuario usuarioAEliminar = new clsUsuario();
         usuarioAEliminar.setUsuid(Integer.parseInt(txtbuscado.getText()));
         usuarioDAO.delete(usuarioAEliminar);
-        daoBitacora bitacora = new  daoBitacora();
-        bitacora.insert(clsUsuarioConectado.getUsuid(), codigoAplicacion, "Delete");
+
         llenadoDeTablas();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -424,10 +419,8 @@ int codigoAplicacion=1;
         usuarioAInsertar.setUsucorreoe(txtCorreoE.getText());
         usuarioAInsertar.setUsutelefono(txtTelefono.getText());
         usuarioAInsertar.setUsudireccion(txtDireccion.getText());
-        usuarioAInsertar.setUsutipo(txtTipo.getText());
         usuarioDAO.insert(usuarioAInsertar);
-        daoBitacora bitacora = new  daoBitacora();
-        bitacora.insert(clsUsuarioConectado.getUsuid(), codigoAplicacion, "Insert");
+ 
         llenadoDeTablas();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -449,10 +442,8 @@ int codigoAplicacion=1;
         usuarioAActualizar.setUsucorreoe(txtCorreoE.getText());
         usuarioAActualizar.setUsutelefono(txtTelefono.getText());        
         usuarioAActualizar.setUsudireccion(txtDireccion.getText());
-        usuarioAActualizar.setUsutipo(txtTipo.getText());
         usuarioDAO.update(usuarioAActualizar);
-        daoBitacora bitacora = new  daoBitacora();
-        bitacora.insert(clsUsuarioConectado.getUsuid(), codigoAplicacion, "Update");
+       
         llenadoDeTablas();
     }//GEN-LAST:event_btnModificarActionPerformed
 
