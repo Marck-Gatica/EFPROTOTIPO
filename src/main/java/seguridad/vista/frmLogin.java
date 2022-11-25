@@ -88,7 +88,7 @@ public class frmLogin extends javax.swing.JFrame {
             }
         });
 
-        cbxAreas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "Area Seguridad", "Area Ventas", " " }));
+        cbxAreas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione:", "Area Seguridad", "Area Traslados", " " }));
         cbxAreas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxAreasActionPerformed(evt);
@@ -198,7 +198,7 @@ public class frmLogin extends javax.swing.JFrame {
                         }
                         break;
                                                                                         
-                        case "Area Ventas":
+                        case "Area Traslados":
                         try {
                             mdiVentas menuVentas = new mdiVentas();
                             menuVentas.setVisible(true);
