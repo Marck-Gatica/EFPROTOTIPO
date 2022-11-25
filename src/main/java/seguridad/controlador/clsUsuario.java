@@ -14,7 +14,6 @@ public class clsUsuario {
     private String usucorreoe; 
     private String usutelefono; 
     private String usudireccion; 
-    private String usutipo; 
     public clsUsuario() { 
     } 
  
@@ -100,17 +99,6 @@ public class clsUsuario {
  
     public void setUsudireccion(String usudireccion) { 
         this.usudireccion = usudireccion; 
-    } 
- 
-    public String getUsutipo() { 
-        return usutipo; 
-    } 
- 
-    public void setUsutipo(String usutipo) { 
-        this.usutipo = usutipo; 
-    } 
- 
-     
-     
+    }    
      
 }

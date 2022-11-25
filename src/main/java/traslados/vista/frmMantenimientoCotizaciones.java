@@ -3,20 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package compras.vista;
+package traslados.vista;
 
 
-import compras.controlador.clsDeudasCompras;
-import compras.controlador.clsProveedores;
-import compras.modelo.daoDeudasCompras;
-import compras.modelo.daoProveedores;
+import traslados.modelo.daoCotizacion;
+import traslados.modelo.daoCliente;
+import traslados.controlador.clsCliente;
+import traslados.controlador.clsCotizacion;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
 import logistica.controlador.clsProductos;
 import logistica.modelo.daoProductos;
-import traslados.controlador.clsCliente;
-import traslados.modelo.daoCliente;
 
 
 
@@ -24,100 +22,102 @@ import traslados.modelo.daoCliente;
  *
  * @author visitante
  */
-public class frmDeudasCompras extends javax.swing.JInternalFrame {
+public class frmMantenimientoCotizaciones extends javax.swing.JInternalFrame {
 
     public void ComboCliente() {
         daoCliente VentasDAO = new daoCliente();
         List<clsCliente> ventas = VentasDAO.select();
-        cbox_procodigo.addItem("Seleccione un cliente");
+        cbox_clicodigo.addItem("Seleccione un cliente");
         //cbox_clicodigo.removeAllItems();
         for (int i = 0; i < ventas.size(); i++) {
-            cbox_procodigo.addItem(String.valueOf(ventas.get(i).getClicodigo()));
-        }                          //revisarr que sea p minuscula o mayuscula el geyProcodigo
+            cbox_clicodigo.addItem(String.valueOf(ventas.get(i).getClicodigo()));
+        }
     }
     
         public void ComboEstatus() {
-        daoDeudasCompras deudasComprasDAO = new daoDeudasCompras();
-        List<clsDeudasCompras> deudasCompras = deudasComprasDAO.select();
-        cbox_DeudasEstatus.addItem("Seleccione un Estado");
+        daoCotizacion VentasDAO = new daoCotizacion();
+        List<clsCotizacion> ventas = VentasDAO.select();
+        cbox_veeestatus.addItem("Seleccione un Estado");
     }
     
         public void estados() {    
-        cbox_DeudasEstatus.addItem("1");
-        cbox_DeudasEstatus.addItem("0");
+        cbox_veeestatus.addItem("1");
+        cbox_veeestatus.addItem("0");
     }
-        //HACER CAMBIOS ACA, DE daoProductos a daoCompras
+        
         public void ComboProducto() {
-        daoProveedores VentasDAO = new daoProveedores();
-        List<clsProveedores> ventas = VentasDAO.select();
-        cbox_prodcodigo.addItem("Seleccione un Proveedor");
+        daoProductos VentasDAO = new daoProductos();
+        List<clsProductos> ventas = VentasDAO.select();
+        cbox_prodcodigo.addItem("Seleccione un Producto");
         //cbox_clicodigo.removeAllItems();
         for (int i = 0; i < ventas.size(); i++) {
-            cbox_prodcodigo.addItem(String.valueOf(ventas.get(i).getprocodigo()));
+            cbox_prodcodigo.addItem(String.valueOf(ventas.get(i).getProdcodigo()));
         }
-        
-    }    
+    }
+           
     
-// de aca todo nice
+
     
     public void llenadoDeTablas() {
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Id documento Deudas Compras");//ENCABEZADO
-        modelo.addColumn("Proveedor Codigo");
-        modelo.addColumn("ID Documento Compras");
+        modelo.addColumn("ID Documento");//ENCABEZADO
+        modelo.addColumn("ID cliente");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Total Venta");
         modelo.addColumn("Estatus");
-        modelo.addColumn("Codigo Proveedor");
-        modelo.addColumn("Total Compras");//DETALLE
-        modelo.addColumn("Saldo Documento Deudas Compras");
-        modelo.addColumn("Deuda Compra");
+        modelo.addColumn("Orden");//DETALLE
+        modelo.addColumn("ID Producto");
+        modelo.addColumn("Cantidad");
+        modelo.addColumn("Precio");
 
-        daoDeudasCompras deudorDAO = new daoDeudasCompras();
-        List<clsDeudasCompras> deudaCompras = deudorDAO.select();
-        daoDeudasCompras deudorDAO2 = new daoDeudasCompras();
-        List<clsDeudasCompras> deudaCompras2 = deudorDAO.select2();
+        daoCotizacion vendedorDAO = new daoCotizacion();
+        List<clsCotizacion> ventas = vendedorDAO.select();
+        daoCotizacion vendedorDAO2 = new daoCotizacion();
+        List<clsCotizacion> ventas2 = vendedorDAO.select2();
         tablaVendedores.setModel(modelo);
-        String[] dato = new String[10];
-        for (int i = 0; i < deudaCompras.size(); i++) {
-            dato[0] = deudaCompras.get(i).getDce_documento(); //ENCABEZADO
-            dato[1] = Integer.toString(deudaCompras.get(i).getProcodigo());
-            dato[2] = deudaCompras.get(i).getCoedocumento();
-            dato[3] = deudaCompras.get(i).getDce_estatus();
-            dato[4] = Integer.toString(deudaCompras2.get(i).getProdcodigo());
-            dato[5] = Integer.toString(deudaCompras2.get(i).getTotal_compras());//DETALLE
-            dato[6] = Integer.toString(deudaCompras2.get(i).getDce_saldo_documento());
-            dato[7] = Integer.toString(deudaCompras2.get(i).getDeudacompra());
+        String[] dato = new String[9];
+        for (int i = 0; i < ventas.size(); i++) {
+            dato[0] = ventas.get(i).Getcve_documento(); //ENCABEZADO
+            dato[1] = Integer.toString(ventas.get(i).Getclicodigo());
+            dato[2] = ventas.get(i).Getcve_fecha();
+            dato[3] = Integer.toString(ventas.get(i).Getcve_total());
+            dato[4] = ventas.get(i).Getcve_estatus();
+            dato[5] = Integer.toString(ventas2.get(i).Getcvd_orden());//DETALLE
+            dato[6] = Integer.toString(ventas2.get(i).Getprodcodigo());
+            dato[7] = Integer.toString(ventas2.get(i).Getcvd_cantidad_producto());
+            dato[8] = Integer.toString(ventas2.get(i).Getcvd_costo_producto());
             //System.out.println("vendedor:" + vendedores);
             modelo.addRow(dato);
         }
     }
 
     public void buscarVendedor() {
-        clsDeudasCompras DeudasAConsultar = new clsDeudasCompras();
-        clsDeudasCompras DeudasAConsultar2 = new clsDeudasCompras();
-        daoDeudasCompras deudorDAO = new daoDeudasCompras();   
-        daoDeudasCompras deudorDAO2 = new daoDeudasCompras();
+        clsCotizacion ventasAConsultar = new clsCotizacion();
+        clsCotizacion ventasAConsultar2 = new clsCotizacion();
+        daoCotizacion vendedorDAO = new daoCotizacion();   
+        daoCotizacion vendedorDAO2 = new daoCotizacion();
         
         //***************************ENCABEZADO*********************************
-        DeudasAConsultar.setDce_documento(txtbuscado.getText());
-        DeudasAConsultar = deudorDAO.query(DeudasAConsultar); 
-        txtIDDocumento.setText(DeudasAConsultar.getDce_documento());
-        cbox_procodigo.setSelectedItem(Integer.toString(DeudasAConsultar.getProcodigo()));
-        txtIDdocumentoCompras.setText(DeudasAConsultar.getCoedocumento());
-        cbox_DeudasEstatus.setSelectedItem(DeudasAConsultar.getDce_estatus());
-        
+        ventasAConsultar.Setcve_documento(txtbuscado.getText());
+        ventasAConsultar = vendedorDAO.query(ventasAConsultar); 
+        txtIDDocumento.setText(ventasAConsultar.Getcve_documento());
+        cbox_clicodigo.setSelectedItem(Integer.toString(ventasAConsultar.Getclicodigo()));
+        txtFecha.setText(ventasAConsultar.Getcve_fecha());
+        txtTotalVentas.setText(Integer.toString(ventasAConsultar.Getcve_total()));
+        cbox_veeestatus.setSelectedItem(ventasAConsultar.Getcve_estatus());
         //***************************DETALLE***********************************
-        DeudasAConsultar2.setDce_documento(txtbuscado.getText());
-        DeudasAConsultar2 = deudorDAO2.query2(DeudasAConsultar2);
-        txtIDDocumento.setText(DeudasAConsultar2.getDce_documento());
-        cbox_prodcodigo.setSelectedItem(Integer.toString(DeudasAConsultar2.getProdcodigo()));
-        txtTotalCompras.setText(Integer.toString(DeudasAConsultar2.getTotal_compras()));
-        txtSaldoDocumento.setText(Integer.toString(DeudasAConsultar2.getDce_saldo_documento()));
-        txtDeudaCompra.setText(Integer.toString(DeudasAConsultar2.getDeudacompra()));
+        ventasAConsultar2.Setcve_documento(txtbuscado.getText());
+        ventasAConsultar2 = vendedorDAO2.query2(ventasAConsultar2);
+        txtIDDocumento.setText(ventasAConsultar2.Getcve_documento());
+        txtOrdenID.setText(Integer.toString(ventasAConsultar2.Getcvd_orden()));
+        cbox_prodcodigo.setSelectedItem(Integer.toString(ventasAConsultar2.Getprodcodigo()));
+        txtCantidad.setText(Integer.toString(ventasAConsultar2.Getcvd_cantidad_producto()));
+        txtPrecio.setText(Integer.toString(ventasAConsultar2.Getcvd_costo_producto()));
         txtIDDocumento.setEnabled(false);
         
     }
 
-    public frmDeudasCompras() {
+    public frmMantenimientoCotizaciones() {
         initComponents();
         llenadoDeTablas();
         ComboCliente();
@@ -146,11 +146,11 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
         label3 = new javax.swing.JLabel();
         txtbuscado = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
-        txtIDdocumentoCompras = new javax.swing.JTextField();
+        txtFecha = new javax.swing.JTextField();
         label5 = new javax.swing.JLabel();
         lb = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        txtSaldoDocumento = new javax.swing.JTextField();
+        txtTotalVentas = new javax.swing.JTextField();
         label6 = new javax.swing.JLabel();
         label7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -159,13 +159,15 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
         label10 = new javax.swing.JLabel();
         label11 = new javax.swing.JLabel();
         label12 = new javax.swing.JLabel();
-        txtTotalCompras = new javax.swing.JTextField();
-        txtDeudaCompra = new javax.swing.JTextField();
-        cbox_procodigo = new javax.swing.JComboBox<>();
+        label14 = new javax.swing.JLabel();
+        txtOrdenID = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
+        cbox_clicodigo = new javax.swing.JComboBox<>();
         cbox_prodcodigo = new javax.swing.JComboBox<>();
         label8 = new javax.swing.JLabel();
         txtIDDocumento = new javax.swing.JTextField();
-        cbox_DeudasEstatus = new javax.swing.JComboBox<>();
+        cbox_veeestatus = new javax.swing.JComboBox<>();
 
         lb2.setForeground(new java.awt.Color(204, 204, 204));
         lb2.setText(".");
@@ -174,7 +176,7 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Mantenimiento Ventas");
+        setTitle("Mantenimiento Cotizaciones");
         setVisible(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -184,7 +186,7 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 95, -1));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 95, -1));
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -192,7 +194,7 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 440, 95, -1));
+        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, 95, -1));
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -200,10 +202,10 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 480, 95, -1));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 440, 95, -1));
 
         label1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label1.setText("Ventas");
+        label1.setText("COTIZACIONES");
         getContentPane().add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(717, 0, -1, -1));
 
         btnModificar.setText("Modificar");
@@ -212,12 +214,12 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
                 btnModificarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 440, 95, -1));
+        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 95, -1));
 
         label3.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label3.setText("Proveedor codigo");
+        label3.setText("Cliente codigo");
         getContentPane().add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 95, -1, -1));
-        getContentPane().add(txtbuscado, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 480, 102, -1));
+        getContentPane().add(txtbuscado, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 102, -1));
 
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -225,14 +227,14 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
                 btnLimpiarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 95, -1));
+        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 95, -1));
 
-        txtIDdocumentoCompras.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtIDdocumentoCompras.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        getContentPane().add(txtIDdocumentoCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 220, -1));
+        txtFecha.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtFecha.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        getContentPane().add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 130, 263, -1));
 
         label5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label5.setText("ID Documento Compras");
+        label5.setText("Fecha");
         getContentPane().add(label5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 130, -1, -1));
 
         lb.setForeground(new java.awt.Color(204, 204, 204));
@@ -247,16 +249,16 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, -1, -1));
 
-        txtSaldoDocumento.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtSaldoDocumento.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        getContentPane().add(txtSaldoDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, 260, -1));
+        txtTotalVentas.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtTotalVentas.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        getContentPane().add(txtTotalVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 165, 263, -1));
 
         label6.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label6.setText("Código Proveedor");
+        label6.setText("Estatus");
         getContentPane().add(label6, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 200, -1, -1));
 
         label7.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label7.setText("Estatus");
+        label7.setText("Total venta");
         getContentPane().add(label7, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 165, -1, -1));
 
         tablaVendedores.setBackground(new java.awt.Color(153, 255, 153));
@@ -283,40 +285,48 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 3, 12)); // NOI18N
         jLabel1.setText("1 = Habilitado y 0 = Inhabilitado");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, 263, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 263, -1));
 
         label10.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label10.setText("Total Compras");
+        label10.setText("Orden ID");
         getContentPane().add(label10, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 234, -1, -1));
 
         label11.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label11.setText("Saldo Documento");
+        label11.setText("Codigo Producto");
         getContentPane().add(label11, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 272, -1, -1));
 
         label12.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        label12.setText("Deuda Compra");
+        label12.setText("Cantidad");
         getContentPane().add(label12, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 309, -1, -1));
 
-        txtTotalCompras.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtTotalCompras.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        getContentPane().add(txtTotalCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, 263, -1));
+        label14.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        label14.setText("Precio");
+        getContentPane().add(label14, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 344, -1, -1));
 
-        txtDeudaCompra.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txtDeudaCompra.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        txtDeudaCompra.addActionListener(new java.awt.event.ActionListener() {
+        txtOrdenID.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtOrdenID.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        getContentPane().add(txtOrdenID, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 234, 263, -1));
+
+        txtCantidad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtCantidad.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        txtCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDeudaCompraActionPerformed(evt);
+                txtCantidadActionPerformed(evt);
             }
         });
-        getContentPane().add(txtDeudaCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 263, -1));
+        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 309, 263, -1));
 
-        cbox_procodigo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cbox_procodigo.addActionListener(new java.awt.event.ActionListener() {
+        txtPrecio.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtPrecio.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        getContentPane().add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 344, 263, -1));
+
+        cbox_clicodigo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        cbox_clicodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbox_procodigoActionPerformed(evt);
+                cbox_clicodigoActionPerformed(evt);
             }
         });
-        getContentPane().add(cbox_procodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 260, -1));
+        getContentPane().add(cbox_clicodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 92, 260, -1));
 
         cbox_prodcodigo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cbox_prodcodigo.addActionListener(new java.awt.event.ActionListener() {
@@ -324,7 +334,7 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
                 cbox_prodcodigoActionPerformed(evt);
             }
         });
-        getContentPane().add(cbox_prodcodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 263, -1));
+        getContentPane().add(cbox_prodcodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 269, 263, -1));
 
         label8.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         label8.setText("ID Documento");
@@ -332,51 +342,49 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
 
         txtIDDocumento.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtIDDocumento.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
-        getContentPane().add(txtIDDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 263, -1));
+        getContentPane().add(txtIDDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 57, 263, -1));
 
-        getContentPane().add(cbox_DeudasEstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 263, -1));
+        getContentPane().add(cbox_veeestatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 200, 263, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         //****************DETALLE****************
-        daoDeudasCompras deudorDAO2 = new daoDeudasCompras();
-        clsDeudasCompras deudorAEliminar2 = new clsDeudasCompras();
-        deudorAEliminar2.setDce_documento(txtbuscado.getText());
-        deudorDAO2.delete2(deudorAEliminar2);
+        daoCotizacion vendedorDAO2 = new daoCotizacion();
+        clsCotizacion vendedorAEliminar2 = new clsCotizacion();
+        vendedorAEliminar2.Setcve_documento(txtbuscado.getText());
+        vendedorDAO2.delete2(vendedorAEliminar2);
         //****************ENCABEZADO****************
-        daoDeudasCompras deudorDAO = new daoDeudasCompras();
-        clsDeudasCompras deudorAEliminar = new clsDeudasCompras();
-        deudorAEliminar.setDce_documento(txtbuscado.getText());
-        deudorDAO.delete(deudorAEliminar);        
+        daoCotizacion vendedorDAO = new daoCotizacion();
+        clsCotizacion vendedorAEliminar = new clsCotizacion();
+        vendedorAEliminar.Setcve_documento(txtbuscado.getText());
+        vendedorDAO.delete(vendedorAEliminar);        
         llenadoDeTablas();
         //FUNCION PARA HABILITAR TEXTO DE ID DOCUMENTO
         txtIDDocumento.setEnabled(true);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        daoDeudasCompras deudorDAO = new daoDeudasCompras();
-        daoDeudasCompras deudorDAO2 = new daoDeudasCompras();
-        clsDeudasCompras deudorAInsertar = new clsDeudasCompras();
-        clsDeudasCompras deudorAInsertar2 = new clsDeudasCompras();
+        daoCotizacion vendedorDAO = new daoCotizacion();
+        daoCotizacion vendedorDAO2 = new daoCotizacion();
+        clsCotizacion ventasAInsertar = new clsCotizacion();
+        clsCotizacion ventasAInsertar2 = new clsCotizacion();
         //******************ENCABEZADO**********************
-        deudorAInsertar.setDce_documento(txtIDDocumento.getText());
-        deudorAInsertar.setProcodigo(Integer.parseInt(cbox_procodigo.getSelectedItem().toString()));
-        deudorAInsertar.setCoedocumento(txtIDdocumentoCompras.getText());
-        deudorAInsertar.setDce_estatus(cbox_DeudasEstatus.getSelectedItem().toString());
-        
+        ventasAInsertar.Setcve_documento(txtIDDocumento.getText());
+        ventasAInsertar.Setclicodigo(Integer.parseInt(cbox_clicodigo.getSelectedItem().toString()));
+        ventasAInsertar.Setcve_fecha(txtFecha.getText());
+        ventasAInsertar.Setcve_total(Integer.parseInt(txtTotalVentas.getText()));
+        ventasAInsertar.Setcve_estatus(cbox_veeestatus.getSelectedItem().toString());
         //******************DETALLE**************************
-        deudorAInsertar2.setDce_documento(txtIDDocumento.getText());
-        deudorAInsertar2.setProdcodigo(Integer.parseInt(cbox_prodcodigo.getSelectedItem().toString()));
-        deudorAInsertar2.setTotal_compras(Integer.parseInt(txtTotalCompras.getText()));
-        deudorAInsertar2.setDce_saldo_documento(Integer.parseInt(txtSaldoDocumento.getText()));
-        deudorAInsertar2.setDeudacompra(Integer.parseInt(txtDeudaCompra.getText()));
+        ventasAInsertar2.Setcve_documento(txtIDDocumento.getText());
+        ventasAInsertar2.Setcvd_orden(Integer.parseInt(txtOrdenID.getText()));
+        ventasAInsertar2.Setprodcodigo(Integer.parseInt(cbox_prodcodigo.getSelectedItem().toString()));
+        ventasAInsertar2.Setcvd_cantidad_producto(Integer.parseInt(txtCantidad.getText()));
+        ventasAInsertar2.Setcvd_costo_producto(Integer.parseInt(txtPrecio.getText()));
         
-        //deudorAInsertar2.Setbodcodigo(Integer.parseInt(cbox_bodcodigo.getSelectedItem().toString()));
-        
-        deudorDAO.insert(deudorAInsertar);
-        deudorDAO2.insert2(deudorAInsertar2);
+        vendedorDAO.insert(ventasAInsertar);
+        vendedorDAO2.insert2(ventasAInsertar2);
         //FUNCION PARA HABILITAR TEXTO DE ID DOCUMENTO
         txtIDDocumento.setEnabled(true);
         llenadoDeTablas();
@@ -389,25 +397,24 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        daoDeudasCompras deudorDAO2 = new daoDeudasCompras();
-        clsDeudasCompras deudorAActualizar2 = new clsDeudasCompras();
-        daoDeudasCompras deudorDAO = new daoDeudasCompras();
-        clsDeudasCompras deudorAActualizar = new clsDeudasCompras();
+        daoCotizacion vendedorDAO2 = new daoCotizacion();
+        clsCotizacion vendedorAActualizar2 = new clsCotizacion();
+        daoCotizacion vendedorDAO = new daoCotizacion();
+        clsCotizacion vendedorAActualizar = new clsCotizacion();
         //******************DETALLE**************************
-        deudorAActualizar2.setDce_documento(txtIDDocumento.getText());
-        deudorAActualizar2.setProdcodigo(Integer.parseInt(cbox_prodcodigo.getSelectedItem().toString()));
-        deudorAActualizar2.setTotal_compras(Integer.parseInt(txtTotalCompras.getText()));
-        deudorAActualizar2.setDce_saldo_documento(Integer.parseInt(txtSaldoDocumento.getText()));
-        deudorAActualizar2.setDeudacompra(Integer.parseInt(txtDeudaCompra.getText()));
-        
-        deudorDAO2.update2(deudorAActualizar2);
+        vendedorAActualizar2.Setcve_documento(txtbuscado.getText());
+        vendedorAActualizar2.Setcvd_orden(Integer.parseInt(txtOrdenID.getText()));
+        vendedorAActualizar2.Setprodcodigo(Integer.parseInt(cbox_prodcodigo.getSelectedItem().toString()));
+        vendedorAActualizar2.Setcvd_cantidad_producto(Integer.parseInt(txtCantidad.getText()));
+        vendedorAActualizar2.Setcvd_costo_producto(Integer.parseInt(txtPrecio.getText()));
+        vendedorDAO2.update2(vendedorAActualizar2);
         //******************ENCABEZADO**********************
-        deudorAActualizar.setDce_documento(txtIDDocumento.getText());
-        deudorAActualizar.setProcodigo(Integer.parseInt(cbox_procodigo.getSelectedItem().toString()));
-        deudorAActualizar.setCoedocumento(txtIDdocumentoCompras.getText());
-        deudorAActualizar.setDce_estatus(cbox_DeudasEstatus.getSelectedItem().toString());
-        
-        deudorDAO.update(deudorAActualizar);
+        vendedorAActualizar.Setcve_documento(txtbuscado.getText());
+        vendedorAActualizar.Setclicodigo(Integer.parseInt(cbox_clicodigo.getSelectedItem().toString()));
+        vendedorAActualizar.Setcve_fecha(txtFecha.getText());
+        vendedorAActualizar.Setcve_total(Integer.parseInt(txtTotalVentas.getText()));
+        vendedorAActualizar.Setcve_estatus(cbox_veeestatus.getSelectedItem().toString());    
+        vendedorDAO.update(vendedorAActualizar);
         //FUNCION PARA HABILITAR TEXTO DE ID DOCUMENTO
         txtIDDocumento.setEnabled(true);
         llenadoDeTablas();     
@@ -415,13 +422,14 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         txtIDDocumento.setText("");
-        cbox_procodigo.setSelectedIndex(0);
-        txtIDdocumentoCompras.setText("");
-        cbox_DeudasEstatus.setSelectedIndex(0);
+        cbox_clicodigo.setSelectedIndex(0);
+        txtFecha.setText("");
+        txtTotalVentas.setText("");
+        cbox_veeestatus.setSelectedIndex(0);
+        txtOrdenID.setText("");
         cbox_prodcodigo.setSelectedIndex(0);
-        txtTotalCompras.setText("");
-        txtSaldoDocumento.setText("");
-        txtDeudaCompra.setText("");
+        txtCantidad.setText("");
+        txtPrecio.setText("");
         txtbuscado.setText("");
         btnRegistrar.setEnabled(true);
         btnModificar.setEnabled(true);
@@ -449,13 +457,13 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void txtDeudaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeudaCompraActionPerformed
+    private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDeudaCompraActionPerformed
+    }//GEN-LAST:event_txtCantidadActionPerformed
 
-    private void cbox_procodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_procodigoActionPerformed
+    private void cbox_clicodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_clicodigoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbox_procodigoActionPerformed
+    }//GEN-LAST:event_cbox_clicodigoActionPerformed
 
     private void cbox_prodcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_prodcodigoActionPerformed
         // TODO add your handling code here:
@@ -468,9 +476,9 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JComboBox<String> cbox_DeudasEstatus;
-    private javax.swing.JComboBox<String> cbox_procodigo;
+    private javax.swing.JComboBox<String> cbox_clicodigo;
     private javax.swing.JComboBox<String> cbox_prodcodigo;
+    private javax.swing.JComboBox<String> cbox_veeestatus;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -478,6 +486,7 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label11;
     private javax.swing.JLabel label12;
+    private javax.swing.JLabel label14;
     private javax.swing.JLabel label3;
     private javax.swing.JLabel label5;
     private javax.swing.JLabel label6;
@@ -487,11 +496,12 @@ public class frmDeudasCompras extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lb2;
     private javax.swing.JLabel lbusu;
     private javax.swing.JTable tablaVendedores;
-    private javax.swing.JTextField txtDeudaCompra;
+    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtIDDocumento;
-    private javax.swing.JTextField txtIDdocumentoCompras;
-    private javax.swing.JTextField txtSaldoDocumento;
-    private javax.swing.JTextField txtTotalCompras;
+    private javax.swing.JTextField txtOrdenID;
+    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtTotalVentas;
     private javax.swing.JTextField txtbuscado;
     // End of variables declaration//GEN-END:variables
 }
