@@ -7,7 +7,7 @@ package traslados.vista;
 
 
 
-import logistica.vista.*;
+import traslados.vista.*;
 import logistica.modelo.daoBodega;
 import logistica.controlador.clsBodega;
 import java.util.List;

@@ -6,21 +6,16 @@
 package traslados.vista;
 
 
-import traslados.modelo.daoVendedores;
-import traslados.modelo.daoVentas;
-import traslados.modelo.daoCliente;
-import traslados.modelo.daoPedidos;
-import traslados.controlador.clsVentas;
-import traslados.controlador.clsCliente;
-import traslados.controlador.clsVendedores;
+
+import traslados.modelo.daoTraslados;
 import traslados.controlador.clsPedidos;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
-import logistica.controlador.clsBodega;
-import logistica.controlador.clsProductos;
-import logistica.modelo.daoBodega;
-import logistica.modelo.daoProductos;
+import traslados.controlador.clsBodega;
+import traslados.controlador.clsProductos;
+import traslados.modelo.daoBodega;
+import traslados.modelo.daoProductos;
 
 
 
@@ -30,17 +25,8 @@ import logistica.modelo.daoProductos;
  *
  * @author visitante
  */
-public class frmMantenimientoPedidos extends javax.swing.JInternalFrame {
+public class frmMantenimientoTraslados extends javax.swing.JInternalFrame {
 
-    public void ComboCliente() {
-        daoCliente PedidosDAO = new daoCliente();
-        List<clsCliente> pedidos = PedidosDAO.select();
-        cbox_clicodigo.addItem("Seleccione un cliente");
-        //cbox_clicodigo.removeAllItems();
-        for (int i = 0; i < pedidos.size(); i++) {
-            cbox_clicodigo.addItem(String.valueOf(pedidos.get(i).getClicodigo()));
-        }
-    }
     
    /*     public void ComboEstatus() {
         daoVentas VentasDAO = new daoVentas();
@@ -73,9 +59,9 @@ public class frmMantenimientoPedidos extends javax.swing.JInternalFrame {
         modelo.addColumn("Cantidad");
         modelo.addColumn("Total");
 
-        daoPedidos PedidosDAO = new daoPedidos();
+        daoTraslados PedidosDAO = new daoTraslados();
         List<clsPedidos> pedidos = PedidosDAO.select();
-        daoPedidos PedidosDAO2 = new daoPedidos();
+        daoTraslados PedidosDAO2 = new daoTraslados();
         List<clsPedidos> pedidos2 = PedidosDAO2.select2();
         tablaVendedores.setModel(modelo);
         String[] dato = new String[6];
@@ -95,8 +81,8 @@ public class frmMantenimientoPedidos extends javax.swing.JInternalFrame {
     public void buscarPedido() {
         clsPedidos PedidosAConsultar = new clsPedidos();
         clsPedidos PedidosAConsultar2 = new clsPedidos();
-        daoPedidos PedidosDAO = new daoPedidos();   
-        daoPedidos PedidosDAO2 = new daoPedidos();
+        daoTraslados PedidosDAO = new daoTraslados();   
+        daoTraslados PedidosDAO2 = new daoTraslados();
         
         //***************************ENCABEZADO*********************************
         
@@ -119,11 +105,10 @@ public class frmMantenimientoPedidos extends javax.swing.JInternalFrame {
         
     }
 
-    public frmMantenimientoPedidos() {
+    public frmMantenimientoTraslados() {
         initComponents();
         llenadoDeTablas();
-        ComboCliente();
-        ComboProducto();
+         ComboProducto();
         
     }
 
@@ -418,14 +403,14 @@ public class frmMantenimientoPedidos extends javax.swing.JInternalFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         //****************DETALLE****************
         
-        daoPedidos PedidosDAO2 = new daoPedidos();
+        daoTraslados PedidosDAO2 = new daoTraslados();
         clsPedidos PedidosAEliminar2 = new clsPedidos();
         PedidosAEliminar2.setPve_documento(txtbuscado.getText());
         PedidosDAO2.delete2(PedidosAEliminar2);
         
         //****************ENCABEZADO****************
         
-        daoPedidos PedidosDAO = new daoPedidos();
+        daoTraslados PedidosDAO = new daoTraslados();
         clsPedidos PedidosAEliminar = new clsPedidos();
         PedidosAEliminar.setPve_documento(txtbuscado.getText());
         PedidosDAO.delete(PedidosAEliminar);        
@@ -436,8 +421,8 @@ public class frmMantenimientoPedidos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        daoPedidos PedidosDAO = new daoPedidos();
-        daoPedidos PedidosDAO2 = new daoPedidos();
+        daoTraslados PedidosDAO = new daoTraslados();
+        daoTraslados PedidosDAO2 = new daoTraslados();
         clsPedidos PedidosAInsertar = new clsPedidos();
         clsPedidos PedidosAInsertar2 = new clsPedidos();
         
@@ -470,9 +455,9 @@ public class frmMantenimientoPedidos extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        daoPedidos PedidosDAO2 = new daoPedidos();
+        daoTraslados PedidosDAO2 = new daoTraslados();
         clsPedidos PedidosAActualizar2 = new clsPedidos();
-        daoPedidos PedidosDAO = new daoPedidos();
+        daoTraslados PedidosDAO = new daoTraslados();
         clsPedidos PedidosAActualizar = new clsPedidos();
         
         //******************DETALLE**************************

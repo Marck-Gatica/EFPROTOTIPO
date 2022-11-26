@@ -12,8 +12,6 @@ import java.awt.HeadlessException;
 import traslados.vista.mdiVentas;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import logistica.vista.mdiLogistica;
-import compras.vista.mdiCompras;
 import traslados.vista.mdiVentas;
 import seguridad.vista.mdiGeneral;
 import seguridad.controlador.clsSeguridad;
